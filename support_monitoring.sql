@@ -34,4 +34,5 @@ select
       and t2.recdate = (select recdate from technical_summary where symbol = t1.symbol order by recdate desc limit 1)
       and t1.symbol
       not in
-         (select symbol from watchlist) order by percent;
+         (select symbol from watchlist) order by percent
+   limit 20;

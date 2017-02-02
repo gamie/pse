@@ -11,7 +11,7 @@
 #echo strlen($result) ? "running" : "not running";
 
 // Initialize Database //
-$dbconn = new mysqli('localhost','pse','pse','pse');
+$dbconn = new mysqli('127.0.0.1','pse','pse','pse');
 /* check connection */
 if ($dbconn->connect_error) {
    die('Connect Error: '. $mysql->connect_error);
@@ -28,6 +28,10 @@ if ($content === false) {
 }
 $json = json_decode($content, true);
 
+if (!is_array($json)) {
+   print "$today|Error: No content $url\n";
+   exit();
+}
 
 // Parse data and load to database //
 foreach($json['stock'] as $stock) {

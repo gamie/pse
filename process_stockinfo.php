@@ -7,6 +7,8 @@
 // Last update: 
 
 require_once ('simple_html_dom.php');
+date_default_timezone_set('Asia/Manila');
+
 
 // Get and check file //
 if (isset($argv[1])) {
@@ -14,12 +16,12 @@ if (isset($argv[1])) {
 } else {
 	die("Please provide stock symbol!\n");
 }
-$table = file_get_html('/home/gamie/Work/data/stockinfo/'.$symbol);
+$table = file_get_html('/Users/gamie/Work/data/stockinfo/'.$symbol);
 #$table = file_get_html('https://www.investagrams.com/Stock/AC');
 
 
 // Initialize Database //
-$dbconn = new mysqli('localhost','pse','pse','pse');
+$dbconn = new mysqli('127.0.0.1','pse','pse','pse');
 /* check connection */
 if ($dbconn->connect_error) {
 	die('Connect Error: '. $mysql->connect_error);
