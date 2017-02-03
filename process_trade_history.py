@@ -1,9 +1,7 @@
 #!/usr/bin/python
 
 import csv
-
 import MySQLdb
-
 import datetime
 
 # Open database connection
@@ -12,10 +10,7 @@ db = MySQLdb.connect("127.0.0.1","pse","pse","pse" )
 # prepare a cursor object using cursor() method
 cursor = db.cursor()
 
-number, trx_number, order, order_date, symbol, shares_qty, match_shares, price, trxtype, status = [], [], [], [], [], [], [], [], [], []
-
-with open('trade_history.txt','r') as f:
-    next(f) # skip headings
+with open('../data/trade_history.txt','r') as f:
     reader = csv.reader(f,delimiter='\t')
     for number,trx_number,order_number,order_date,symbol,shares_qty,match_shares,price,trxtype,status in reader:
         if number and (number != '#'):
@@ -26,7 +21,7 @@ with open('trade_history.txt','r') as f:
             order_date = datetime.datetime.strftime(order_date,'%Y-%m-%d %H:%M:%S')
             str = "insert into trade_history values ('"  + trx_number + "','"  + order_number + "','"  + order_date + "','"  + symbol \
                 + "','"  + shares_qty + "','"  + match_shares + "','"  + price + "','"  + trxtype + "','"  + status + "')"
-            #print (str)
+            # try to insert into DB
             try:
                 cursor.execute(str)
             except MySQLdb.Error, e:
@@ -35,8 +30,7 @@ with open('trade_history.txt','r') as f:
                 except IndexError:
                     print datetime.datetime.now().strftime("%Y-%m-%d %H:%M") + "|MySQL error: %s" % str(e)
 
-
+# commit and disconnect from server
 db.commit()
-# disconnect from server
 db.close()
 
