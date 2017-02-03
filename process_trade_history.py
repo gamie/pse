@@ -2,35 +2,41 @@
 
 import csv
 
-number=[]
-trx=[]
-order=[]
-order_date=[]
-stkcode=[]
-enuofshares=[]
-matchedshares=[]
-price=[]
-trxtype=[]
-status=[]
+import MySQLdb
+
+import datetime
+
+# Open database connection
+db = MySQLdb.connect("127.0.0.1","pse","pse","pse" )
+
+# prepare a cursor object using cursor() method
+cursor = db.cursor()
+
+number, trx_number, order, order_date, symbol, shares_qty, match_shares, price, trxtype, status = [], [], [], [], [], [], [], [], [], []
 
 with open('trade_history.txt','r') as f:
     next(f) # skip headings
     reader = csv.reader(f,delimiter='\t')
-    for number,trx,order,order_date,stkcode,enuofshares,matchedshares,price,trxtype,status in reader:
-        number.append(number)
-        trx.append(trx)
-        order.append(order)
-        order_date.append(order_date)
-        stkcode.append(stkcode)
-        enuofshares.append(enuofshares)
-        matchedshares.append(matchedshares)
-        price.append(price)
-        trxtype.append(trxtype)
-        status.append(status)
+    for number,trx_number,order_number,order_date,symbol,shares_qty,match_shares,price,trxtype,status in reader:
+        if number and (number != '#'):
+            shares_qty = shares_qty.replace(",","")
+            match_shares = match_shares.replace(",","")
+            price = price.replace(",","")
+            order_date = datetime.datetime.strptime(order_date,'%m/%d/%Y  %H:%M:%S')
+            order_date = datetime.datetime.strftime(order_date,'%Y-%m-%d %H:%M:%S')
+            str = "insert into trade_history values ('"  + trx_number + "','"  + order_number + "','"  + order_date + "','"  + symbol \
+                + "','"  + shares_qty + "','"  + match_shares + "','"  + price + "','"  + trxtype + "','"  + status + "')"
+            #print (str)
+            try:
+                cursor.execute(str)
+            except MySQLdb.Error, e:
+                try:
+                    print datetime.datetime.now().strftime("%Y-%m-%d %H:%M") + "|MySQL Error [%d]: %s" % (e.args[0], e.args[1])
+                except IndexError:
+                    print datetime.datetime.now().strftime("%Y-%m-%d %H:%M") + "|MySQL error: %s" % str(e)
 
-print (trx)
-print (stkcode)
-print (matchedshares)
-print (price)
-print (trxtype)
+
+db.commit()
+# disconnect from server
+db.close()
 
