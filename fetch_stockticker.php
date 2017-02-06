@@ -10,6 +10,8 @@
 #$result = shell_exec("ps aux | grep -v grep |  grep ". basename(__FILE__) );
 #echo strlen($result) ? "running" : "not running";
 
+date_default_timezone_set('Asia/Manila');
+
 // Initialize Database //
 $dbconn = new mysqli('127.0.0.1','pse','pse','pse');
 /* check connection */
