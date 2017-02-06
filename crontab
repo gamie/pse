@@ -1,0 +1,5 @@
+30-59 9 * * Mon,Tue,Wed,Thu,Fri /usr/local/bin/lckdo /Users/gamie/Work/lock/fetch_stockticker.lck /Users/gamie/Work/pse/fetch_stockticker.php >> /Users/gamie/Work/log/fetch_stockticker.log
+* 10-12 * * Mon,Tue,Wed,Thu,Fri /usr/local/bin/lckdo /Users/gamie/Work/lock/fetch_stockticker.lck /Users/gamie/Work/pse/fetch_stockticker.php >> /Users/gamie/Work/log/fetch_stockticker.log
+30-59 13 * * Mon,Tue,Wed,Thu,Fri /usr/local/bin/lckdo /Users/gamie/Work/lock/fetch_stockticker.lck /Users/gamie/Work/pse/fetch_stockticker.php >> /Users/gamie/Work/log/fetch_stockticker.log
+* 14-15 * * Mon,Tue,Wed,Thu,Fri /usr/local/bin/lckdo /Users/gamie/Work/lock/fetch_stockticker.lck /Users/gamie/Work/pse/fetch_stockticker.php >> /Users/gamie/Work/log/fetch_stockticker.log
+1-30 15 * * Mon,Tue,Wed,Thu,Fri /usr/local/bin/lckdo /Users/gamie/Work/lock/fetch_stockticker.lck /Users/gamie/Work/pse/fetch_stockticker.php >> /Users/gamie/Work/log/fetch_stockticker.log
